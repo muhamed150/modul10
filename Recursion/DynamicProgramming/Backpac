@@ -1,0 +1,102 @@
+using System;
+using System.Linq;
+
+namespace Backpac
+{
+    class Program
+    {
+        static int n;
+        static int[] weight;
+        static int[] price;
+        static int capacity;
+        static void Main(string[] args)
+        {
+            n = int.Parse(Console.ReadLine());
+            weight = new int[n + 1];
+            price = new int[n+1];
+
+            for (int i = 1; i <=n ; i++)
+            {
+                var data = Console.ReadLine().Split().Select(int.Parse).ToArray();
+                weight[i] = data[0];
+                price[i] = data[1];
+            }
+
+            capacity = int.Parse(Console.ReadLine());
+             
+            Solve();
+        }
+
+        private static void Solve()
+        {
+            int[] Fn = new int[capacity + 1];
+            bool[,] set = new bool[capacity + 1, n + 1];
+
+            for (int i = 1; i <=capacity; i++)
+            {
+                int maxValue = 0;
+                int maxIndex = 0;
+                for (int j = 1; j <= n; j++)
+                {
+                    int t = weight[j]; // тегло на текущия елемент
+                    if (t>i)
+                    {
+                        continue;
+                    }
+                    if (!set[i-t,j])
+                        if (Fn[i-t]+price[j]>maxValue)
+                        {
+                            maxIndex = j;
+                            maxValue = Fn[i - t] + price[j];
+                        }
+                }
+                if (maxIndex>0)// има предмет за взимане 
+                {
+                    int t = weight[maxIndex];
+                    for (int j = 1; j <=n ; j++)
+                    {
+                        set[i, j] = set[i - t,j];
+                    }
+                    set[i, maxIndex] = true;
+                    Fn[i] = maxValue;
+
+                }
+                if (Fn[i]<Fn[i-1]) //има по-малка цена  
+                {
+                    for (int j = 1; j <=n ; j++)
+                    {
+                        set[i, j] = set[i - 1, j];
+                    }
+                    Fn[i] = Fn[i - 1];
+                }
+                    
+            }
+            Console.WriteLine($"Max value: {Fn[capacity]}");
+            for (int i = 1; i <= n; i++)
+            {
+                if (set[capacity,i])
+                {
+                    Console.Write($"{i} ");
+                }
+            }
+            Console.WriteLine();
+           
+
+            }
+        }
+    }
+/*
+8
+3 5
+7 3
+6 9
+1 1
+2 1
+4 2
+5 5
+5 2 
+7
+--
+Max: 10
+Taken things: 3 4
+*/
