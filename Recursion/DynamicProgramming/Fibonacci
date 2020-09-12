@@ -1,0 +1,58 @@
+using System;
+
+namespace Fibonachi
+{
+    class Program
+    {
+        static int[] frec ;
+        static void Main(string[] args)
+        {
+            var n = int.Parse(Console.ReadLine());
+            frec = new int[n + 1];
+            frec[0] = 0;
+            frec[1] = frec[2] = 1;
+            Console.WriteLine(Fib(n));
+
+
+            //int a = 1;
+            //int b = 1;
+            //int c = 0;
+            //for (int i = 3; i <= n; i++)
+            //{
+            //    c = a + b;
+            //    a = b;
+            //    b = c;
+            //}
+            //Console.WriteLine(c);
+
+            //var n = int.Parse(Console.ReadLine());
+            //int[] f = new int[n + 1];
+            //f[0] = 0;
+            //f[1] = f[2] = 1;
+            //for (int i = 3; i <= n; i++)
+            //{
+            //    f[i] = f[i - 1] + f[i - 2];
+            //}
+            //Console.WriteLine(f[n]);
+
+
+
+
+
+
+
+
+        }
+        static int Fib(int n)
+            {
+                if (frec[n]>0)
+                {
+                    return frec[n];
+                }
+                else
+                {
+                 return frec[n] = Fib(n - 1) + Fib(n - 2);
+                }
+            }
+    }
+}
