@@ -1,0 +1,21 @@
+using System;
+
+namespace CountOfNumbers4_1
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            int n = int.Parse(Console.ReadLine());
+            int[] Broi = new int[n + 1];
+            Broi[1] = 2;
+            Broi[2] = 5;
+            Broi[3] = 13;
+            for (int i = 4; i <=n ; i++)
+            {
+                Broi[i] = 2 * Broi[i - 1] + Broi[i - 2] + Broi[i - 3];
+            }
+            Console.WriteLine(Broi[n]);
+        }
+    }
+}
